@@ -1,0 +1,42 @@
+CREACION TABLA students
+-----------------------
+CREATE TABLE `students` (
+  `students_id` int NOT NULL AUTO_INCREMENT,
+  `students_name` varchar(45) NOT NULL,
+  PRIMARY KEY (`students_id`),
+  UNIQUE KEY `students_id_UNIQUE` (`students_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREACION TABLA teachers
+-----------------------
+CREATE TABLE `teachers` (
+  `teachers_id` int NOT NULL,
+  `teachers_name` varchar(45) NOT NULL,
+  PRIMARY KEY (`teachers_id`),
+  UNIQUE KEY `teachers_id_UNIQUE` (`teachers_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREACION TABLA courses
+----------------------
+CREATE TABLE `courses` (
+  `courses_id` int NOT NULL,
+  `courses_description` varchar(45) NOT NULL,
+  `courses_teacher_id` int NOT NULL,
+  PRIMARY KEY (`courses_id`),
+  UNIQUE KEY `courses_id_UNIQUE` (`courses_id`),
+  KEY `courses_courses_id_idx` (`courses_teacher_id`),
+  CONSTRAINT `courses_courses_id` FOREIGN KEY (`courses_teacher_id`) REFERENCES `teachers` (`teachers_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREACION TABLA grades
+---------------------
+CREATE TABLE `grades` (
+  `grades_student_id` int NOT NULL,
+  `grades_course_id` int NOT NULL,
+  `grades_grade` int DEFAULT NULL,
+  KEY `grades_courses_id_idx` (`grades_course_id`),
+  KEY `grades_students_id_idx` (`grades_student_id`),
+  CONSTRAINT `grades_courses_id` FOREIGN KEY (`grades_course_id`) REFERENCES `courses` (`courses_id`) ON DELETE CASCADE,
+  CONSTRAINT `grades_students_id` FOREIGN KEY (`grades_student_id`) REFERENCES `students` (`students_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
